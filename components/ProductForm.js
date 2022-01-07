@@ -1,8 +1,12 @@
 import { useState, useContext } from "react"
 import { formatter } from "../utils/helpers"
 import ProductOptions from "./ProductOptions"
+import { CartContext } from "../context/shopContext";
 
 export default function ProductForm({ product }) {
+
+    const{ addToCart } = useContext(CartContext)
+
     //wir checken ob Produktvarianten existieren und wenn ja gehen wir die jeweils durch, nennen jede Variante variant
     const allVariantOptions = product.variants.edges?.map(variant => {
 
@@ -57,7 +61,11 @@ export default function ProductForm({ product }) {
                     />
                 ))
             }
-            <button className="bg-black rounded-lg text-white px-2 py-3 hover:bg-gray-800">Add To Cart</button>
+            <button 
+            onClick={() => {
+                addToCart(selectedVariant)
+            }}
+            className="bg-black rounded-lg text-white px-2 py-3 hover:bg-gray-800">Add To Cart</button>
         </div>
     )
 }
